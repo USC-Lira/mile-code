@@ -93,8 +93,8 @@ def computational_intervention_model(state: torch.Tensor,
         policy_expected_action_probs = F.softmax(policy_expected_action_probs, dim=1)
         mean = torch.tensor([0.0], device=state.device)
         std_dev = torch.tensor([1.0], device=state.device)
-        inside_cdf = (mental_model_expected_action_probs * torch.log(policy_expected_action_probs)).sum(dim=1)
-        inside_cdf = policy_expected_action_probs - inside_cdf
+        inside_cdf = (mental_model_expected_action_probs * torch.log(policy_expected_action_probs)).sum(dim=1, keepdim=True)
+        inside_cdf = torch.log(policy_expected_action_probs) - inside_cdf
         inside_cdf = inside_cdf - cost
         intervention_prob = (policy_expected_action_probs * torch.distributions.Normal(mean, std_dev).cdf(inside_cdf)).sum(dim=1)
         total_prob = torch.ones((policy_expected_action_probs.shape[0],policy_expected_action_probs.shape[1]+1), device=state.device)
