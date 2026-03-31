@@ -1,7 +1,7 @@
 gymnasium==0.29.1
 numpy
 wandb
-torch
+torch<2.6
 stable-baselines3<=2.3.2
 imitation
 metaworld @ git+https://github.com/Farama-Foundation/Metaworld.git@c822f28f582ba1ad49eb5dcf61016566f28003ba
